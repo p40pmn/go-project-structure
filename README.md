@@ -59,8 +59,8 @@ This layout keeps all non-reusable code, including services and utilities, withi
 
 * **Centralized Configuration:** All application configuration and database connections are handled within `cmd/main.go`. This keeps the setup centralized and easy to manage.
 * **Dependency Injection:** Database and service dependencies are injected into each package's **Service struct**. This promotes loose coupling and makes the code easier to test.
-* **Encapsulated Logic:** Within each service package (e.g., `internal/users`), a `service.go` file defines the public-facing methods, while a `sql.go` file** contains the specific database query logic. This ensures that a service can only be accessed through its exposed public interface.
-* **Service-to-Service Communication:** Services that need to interact with each other will do so by holding a reference to the other service's **Service struct**, ensuring they only use approved, public methods. This prevents direct access to internal database queries from other services.
+* **Encapsulated Logic:** Within each service package (e.g., `internal/users`), a `service.go` file defines the public-facing methods, while a **private `sql.go` file** contains the specific database query logic. This ensures that a service can only be accessed through its exposed public interface.
+* **Service-to-Service Communication:** Services that need to interact with each other will do so by holding a reference to the other service's **public Service struct**, ensuring they only use approved, public methods. This prevents direct access to internal database queries from other services.
 
 -----
 
