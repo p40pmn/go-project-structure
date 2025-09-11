@@ -1,0 +1,1 @@
+DROP TABLE "user",role_has_permission, user_has_role, role, permission;
