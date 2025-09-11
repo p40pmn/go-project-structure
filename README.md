@@ -275,3 +275,21 @@ Your API uses Google RPC Status codes to provide consistent and machine-readable
       }
     }
     ```
+
+## 🛡️ Security Best Practices
+
+* **Password Storage:** Passwords are hashed using a strong, modern hashing function like **bcrypt** to ensure they cannot be reversed.
+* **Paseto Security:** Paseto tokens are used instead of JWTs to avoid common security vulnerabilities, as they are "platform-agnostic" and explicitly deny unsigned tokens.
+* **Input Validation:** All API inputs are meticulously **validated** to prevent malicious data from entering the system.
+* **CORS Protection:** The API is configured with **CORS** (Cross-Origin Resource Sharing) to allow requests only from trusted origins.
+* **Rate Limiting:** **API rate limiting** is implemented to prevent abuse and protect against denial-of-service attacks.
+* **Environment Variables:** All sensitive information, such as database credentials and Paseto secrets, is stored securely in **environment variables**.
+* **Structured Error Handling:** Error responses use **Google RPC Status codes** to avoid leaking sensitive internal information to the client.
+
+## ⚡ Performance Optimizations
+
+* **Database Indexing:** Strategic indexes are applied to frequently queried database fields to ensure fast data retrieval.
+* **Query Optimization:** All database queries are carefully crafted using the **Squirrel SQL builder** to ensure they are efficient and performant.
+* **Pagination:** All endpoints that return lists of data, such as users or roles, are **paginated** to prevent large, slow responses.
+* **Caching:** A **Redis cache** is utilized for frequently accessed data to minimize database load and reduce response times.
+* **Docker Optimization:** **Multi-stage Docker builds** are used to create small, production-ready container images, reducing deployment time and resource usage.
