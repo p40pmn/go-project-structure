@@ -5,9 +5,28 @@ import (
 	"errors"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	rpcstatus "google.golang.org/grpc/status"
 )
+
+// ListMyRoles returns a list of the user's roles.
+func (s *Auth) ListMyRoles(ctx context.Context) ([]*Role, error) {
+	claims := ClaimsFromContext(ctx)
+
+	zlog := s.zlog.With(
+		zap.String("Method", "ListMyRoles"),
+		zap.String("username", claims.Username),
+	)
+
+	roles, err := listRolesByUsername(ctx, s.db, claims.Username)
+	if err != nil {
+		zlog.Error("failed to list roles", zap.Error(err))
+		return nil, err
+	}
+
+	return roles, nil
+}
 
 // CanI checks if the user has the specified permissions.
 func (s *Auth) CanI(ctx context.Context, permissions ...string) error {
